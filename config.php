@@ -3,7 +3,7 @@
 $host = getenv('MYSQLHOST');
 $user = getenv('MYSQLUSER');
 $pass = getenv('MYSQLPASSWORD');
-$db   = getenv('MYSQL_DATABASE');
+$db   = getenv('MYSQLDATABASE');
 $port = getenv('MYSQLPORT');
 
 $conn = new mysqli(
@@ -11,14 +11,11 @@ $conn = new mysqli(
     $user,
     $pass,
     $db,
-    $port
+    (int)$port
 );
 
 if ($conn->connect_error) {
-    die(json_encode([
-        "success" => false,
-        "message" => $conn->connect_error
-    ]));
+    die("Error: " . $conn->connect_error);
 }
 
 $conn->set_charset("utf8mb4");
