@@ -10,6 +10,18 @@ $data = json_decode(
     true
 );
 
+if(
+    empty($data["nombre"]) ||
+    empty($data["email"]) ||
+    empty($data["password"])
+){
+    echo json_encode([
+        "success"=>false,
+        "message"=>"Campos vacíos"
+    ]);
+    exit;
+}
+
 $nombre = $data["nombre"];
 $email = $data["email"];
 $password = $data["password"];
@@ -28,8 +40,8 @@ if($conn->query($sql)){
 }else{
 
     echo json_encode([
-        "success"=>false
+        "success"=>false,
+        "message"=>$conn->error
     ]);
 }
-
 ?>
