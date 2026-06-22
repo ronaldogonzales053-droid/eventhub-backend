@@ -10,25 +10,34 @@ $data = json_decode(
     true
 );
 
-$usuario_id = $data["usuario_id"];
-$evento_id = $data["evento_id"];
+if(!$data){
+    echo json_encode([
+        "success" => false,
+        "message" => "No llegaron datos"
+    ]);
+    exit;
+}
+
+$usuario_id = $data["usuario_id"] ?? 0;
+$evento_id = $data["evento_id"] ?? 0;
 
 $sql = "INSERT INTO reservas
-(usuario_id,evento_id)
+(usuario_id, evento_id)
 VALUES
-('$usuario_id','$evento_id')";
+('$usuario_id', '$evento_id')";
 
 if($conn->query($sql)){
 
     echo json_encode([
-        "success"=>true
+        "success" => true,
+        "message" => "Reserva realizada"
     ]);
 
 }else{
 
     echo json_encode([
-        "success"=>false
+        "success" => false,
+        "message" => $conn->error
     ]);
 }
-
 ?>
