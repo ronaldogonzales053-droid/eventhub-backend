@@ -10,12 +10,23 @@ $data = json_decode(
     true
 );
 
-$email = $data["email"] ?? "";
-$password = $data["password"] ?? "";
+if(
+    empty($data["email"]) ||
+    empty($data["password"])
+){
+    echo json_encode([
+        "success"=>false,
+        "message"=>"Campos vacíos"
+    ]);
+    exit;
+}
+
+$email = $data["email"];
+$password = $data["password"];
 
 $sql = "SELECT * FROM usuarios
-        WHERE email='$email'
-        AND password='$password'";
+WHERE email='$email'
+AND password='$password'";
 
 $result = $conn->query($sql);
 
@@ -35,5 +46,4 @@ if($result->num_rows > 0){
         "message"=>"Credenciales incorrectas"
     ]);
 }
-
 ?>
